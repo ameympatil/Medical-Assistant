@@ -15,6 +15,34 @@ def llm_request(patient_deatils):
             {"role": "system", "content": system_message},
             {"role": "user", "content": patient_deatils},
         ],
+        "response_format": {
+            "type": "json_schema",
+            "json_schema": {
+                "name": "medical_summary_response",
+                "strict": "true",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "name": {"type": "string"},
+                        "gender": {"type": "string"},
+                        "age": {"type": "integer"},
+                        "weight": {"type": "string"},
+                        "height": {"type": "string"},
+                        "BMI": {"type": "number"},
+                        "chief_medical_complaint": {"type": "string"},
+                    },
+                    "required": [
+                        "name",
+                        "gender",
+                        "age",
+                        "weight",
+                        "height",
+                        "BMI",
+                        "chief_medical_complaint",
+                    ],
+                },
+            },
+        },
         "temperature": temperature,
         "max_tokens": max_tokens,
         "stream": stream,
@@ -29,5 +57,5 @@ def llm_request(patient_deatils):
 
     # Parse the JSON response
     response_data = response.json()
-    final_response = response_data.result.choices[0].message.content
-    return response_data
+    final_response = response_data["choices"][0]["message"]["content"]
+    return final_response

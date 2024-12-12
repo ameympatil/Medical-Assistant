@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from llm import llm_request  # Assuming this is the function in llm.py
+from llm import llm_request
+import json
 
 app = FastAPI()
 
@@ -24,8 +25,8 @@ async def process_patient(request: PatientRequest):
     """
     try:
         result = llm_request(request.patient_details)
-        # result = "Yess success!!!"
-        return {"status": "success", "result": result}
+        result_dict = json.loads(result)
+        return result_dict
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
