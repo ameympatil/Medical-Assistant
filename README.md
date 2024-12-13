@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a FastAPI-based application that leverages a language model (LLM) to perform two main tasks:
+This project is an NLP assessment developed for showcasing the use of a FastAPI-based application that leverages a language model (LLM) to perform two main tasks:
 1. **Entity Extraction**: Extracts specific medical entities from patient data.
 2. **Semantic Similarity**: Performs retrieval-augmented generation (RAG) using semantic similarity on a Wikipedia article.
 
@@ -28,6 +28,8 @@ This project is a FastAPI-based application that leverages a language model (LLM
    - Ensure LMStudio is running on your local machine.
    - Use the quantized version of the "phi-3.1-mini-128k-instruct" model.
 
+![LM Studio](images/lmstudio.png)
+
 4. **Run the Application**:
    ```bash
    uvicorn main:app --host 0.0.0.0 --port 8000
@@ -35,6 +37,8 @@ This project is a FastAPI-based application that leverages a language model (LLM
 
 5. **Access the API**:
    - Open your browser and navigate to `http://localhost:8000/docs` to access the Swagger UI for API documentation and testing.
+
+![Swagger UI](images/fastapi.png)
 
 ## Usage
 
@@ -53,37 +57,37 @@ This project is a FastAPI-based application that leverages a language model (LLM
 ## Example Patients
 
 1. **Patient 1**:
-   - Name: John Doe
+   - Name: John R. Whitaker
    - Gender: Male
-   - Age: 35
-   - Weight: 183 lbs
-   - Height: 5'11" (72 inches)
-   - BMI: 25.5
-   - Chief Medical Complaint: Frequent headaches and dizziness
+   - Age: 52
+   - Weight: 198 lbs
+   - Height: 5'10" (70 inches)
+   - BMI: 28.64
+   - Chief Medical Complaint: Worsening peripheral neuropathy in lower extremities and shortness of breath during mild exertion
 
-![Example Patient 1](images\Patient1.png)
+![Example Patient 1](images/Patient1.png)
 
 2. **Patient 2**:
-   - Name: Jane Smith
+   - Name: Emily J. Rivera
    - Gender: Female
-   - Age: 28
-   - Weight: 150 lbs
-   - Height: 5'6" (66 inches)
-   - BMI: 24.2
-   - Chief Medical Complaint: Persistent cough and fatigue
+   - Age: 41
+   - Weight: 172 lbs
+   - Height: 5'5" (65 inches)
+   - BMI: 28.03
+   - Chief Medical Complaint: Persistent chest tightness and shortness of breadth during moderate activity
 
-![Example Patient 2](images\Patient2.png)
+![Example Patient 2](images/Patient2.png)
 
 3. **Patient 3**:
-   - Name: Alice Johnson
+   - Name: Karen L. Thompson
    - Gender: Female
-   - Age: 42
-   - Weight: 160 lbs
-   - Height: 5'7" (67 inches)
-   - BMI: 25.1
-   - Chief Medical Complaint: Chest pain and shortness of breath
+   - Age: 38
+   - Weight: 162 lbs
+   - Height: 5'4" (64 inches)
+   - BMI: 27.9
+   - Chief Medical Complaint: Frequent headaches and dizziness
 
-![Example Patient 3](images\Patient3.png)
+![Example Patient 3](images/Patient3.png)
 
 ### Semantic Similarity
 
@@ -97,7 +101,7 @@ This project is a FastAPI-based application that leverages a language model (LLM
   ```
 - **Response**: JSON object with the generated response and similar context.
 
-![Semantic Similarity Example](images\semantic_similarity.png)
+![Semantic Similarity Example](images/semantic_similarity.png)
 
 ## Pre-run Results
 
@@ -113,7 +117,3 @@ This project is a FastAPI-based application that leverages a language model (LLM
 
 - If you encounter issues with the LLM, verify that LMStudio is running and the model is correctly loaded.
 - For API-related issues, check the FastAPI logs for error messages and ensure all dependencies are installed.
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for more details.
