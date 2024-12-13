@@ -1,5 +1,5 @@
-import requests
 import json
+import requests
 from config import (
     system_message_er,
     system_message_rag,
@@ -11,17 +11,27 @@ from config import (
 )
 
 
-def llm_entity_extraction(patient_deatils):
-    # Define the API endpoint and request headers
+def llm_entity_extraction(patient_details):
+    """
+    Extracts medical entities from patient details using a language model.
+
+    Args:
+        patient_details (str): The patient details to process.
+
+    Returns:
+        str: The extracted medical entities in JSON format.
+
+    Raises:
+        Exception: If the API request fails.
+    """
     url = "http://127.0.0.1:1234/v1/chat/completions"
     headers = {"Content-Type": "application/json"}
 
-    # Define the request payload
     payload = {
         "model": model_name,
         "messages": [
             {"role": "system", "content": system_message_er},
-            {"role": "user", "content": patient_deatils},
+            {"role": "user", "content": patient_details},
         ],
         "response_format": {
             "type": "json_schema",
@@ -56,25 +66,33 @@ def llm_entity_extraction(patient_deatils):
         "stream": stream,
     }
 
-    # Send the POST request
-    response = requests.post(url, headers=headers, data=json.dumps(payload))
-
-    # Check for errors
-    if response.status_code != 200:
-        raise Exception(f"Error: {response.status_code}, {response.text}")
-
-    # Parse the JSON response
-    response_data = response.json()
-    final_response = response_data["choices"][0]["message"]["content"]
-    return final_response
+    try:
+        response = requests.post(url, headers=headers, data=json.dumps(payload))
+        response.raise_for_status()  # Raises an HTTPError for bad responses
+        response_data = response.json()
+        final_response = response_data["choices"][0]["message"]["content"]
+        return final_response
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Error during API request: {e}")
 
 
 def llm_rag(query, context):
-    # Define the API endpoint and request headers
+    """
+    Performs retrieval-augmented generation using a language model.
+
+    Args:
+        query (str): The user query.
+        context (str): The context to use for generating the response.
+
+    Returns:
+        str: The generated response.
+
+    Raises:
+        Exception: If the API request fails.
+    """
     url = "http://127.0.0.1:1234/v1/chat/completions"
     headers = {"Content-Type": "application/json"}
 
-    # Define the request payload
     payload = {
         "model": model_name,
         "messages": [
@@ -86,14 +104,11 @@ def llm_rag(query, context):
         "stream": stream,
     }
 
-    # Send the POST request
-    response = requests.post(url, headers=headers, data=json.dumps(payload))
-
-    # Check for errors
-    if response.status_code != 200:
-        raise Exception(f"Error: {response.status_code}, {response.text}")
-
-    # Parse the JSON response
-    response_data = response.json()
-    final_response = response_data["choices"][0]["message"]["content"]
-    return final_response
+    try:
+        response = requests.post(url, headers=headers, data=json.dumps(payload))
+        response.raise_for_status()
+        response_data = response.json()
+        final_response = response_data["choices"][0]["message"]["content"]
+        return final_response
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"Error during API request: {e}")
